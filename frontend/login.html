@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Login - Aim Academy</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <link rel="stylesheet" href="css/login.css" />
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <img src="images/logo.png" alt="Aim Academy Logo" />
+                <h1>
+                    Aim<span>Academy</span>
+                </h1>
+            </a>
+            <nav class="navbar">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="courses.html">Courses</a></li>
+                    <li><a href="timetable.html">Timetable</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="register.html" class="btn-register">Register</a></li>
+                </ul>
+            </nav>
+            <div class="mobile-menu">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Auth Section -->
+    <section class="auth-section">
+        <div class="container">
+            <div class="auth-card">
+                <h2>Login to Your Account</h2>
+                <form id="loginForm" novalidate>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <div class="password-input">
+                            <input
+                              type="password"
+                              id="password"
+                              name="password"
+                              required
+                            />
+                            <i class="fas fa-eye toggle-password"></i>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">Login</button>
+                        <a href="register.html" class="btn-secondary">Create Account</a>
+                    </div>
+
+                    <div class="auth-links">
+                        <a href="#">Forgot Password?</a>
+                    </div>
+                </form>
+                <div id="errorMessage" style="color:red; margin-top:10px;"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <h3>Aim Academy</h3>
+                    <p>
+                        Excellence in education since 2010. Specializing in Mathematics
+                        coaching for school and competitive exams.
+                    </p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="courses.html">Courses</a></li>
+                        <li><a href="timetable.html">Timetable</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Sholinganallur, Chennai</p>
+                    <p><i class="fas fa-phone"></i> +91 9011549702</p>
+                    <p><i class="fas fa-envelope"></i> info@aimacademy.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Aim Academy. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        document
+          .querySelector(".mobile-menu")
+          .addEventListener("click", function () {
+            document.querySelector(".navbar").classList.toggle("active");
+          });
+
+        // Header Scroll Effect
+        window.addEventListener("scroll", function () {
+          const header = document.querySelector(".header");
+          if (window.scrollY > 50) {
+            header.classList.add("scrolled");
+          } else {
+            header.classList.remove("scrolled");
+          }
+        });
+
+        // Toggle Password Visibility
+        document
+          .querySelector(".toggle-password")
+          .addEventListener("click", function () {
+            const passwordInput = document.getElementById("password");
+            const icon = this;
+
+            if (passwordInput.type === "password") {
+              passwordInput.type = "text";
+              icon.classList.remove("fa-eye");
+              icon.classList.add("fa-eye-slash");
+            } else {
+              passwordInput.type = "password";
+              icon.classList.remove("fa-eye-slash");
+              icon.classList.add("fa-eye");
+            }
+          });
+
+        // Form Input Focus Effects
+        const inputs = document.querySelectorAll("input");
+        inputs.forEach((input) => {
+          input.addEventListener("focus", function () {
+            this.parentElement.querySelector("label").style.color = "var(--primary)";
+          });
+
+          input.addEventListener("blur", function () {
+            this.parentElement.querySelector("label").style.color = "var(--dark)";
+          });
+        });
+
+        document
+          .getElementById("loginForm")
+          .addEventListener("submit", async function (e) {
+            e.preventDefault();
+
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value.trim();
+            const errorMessage = document.getElementById("errorMessage");
+            errorMessage.textContent = "";
+
+            if (!email || !password) {
+              errorMessage.textContent = "Please fill in all fields.";
+              return;
+            }
+
+            try {
+              const res = await fetch("http://localhost:5000/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, password }),
+              });
+
+              const data = await res.json();
+                                     
+              if (res.ok) {
+              alert(data.message || "Login successful!");
+
+              // 🔐 Store email and role in localStorage
+              localStorage.setItem("email", email);
+              localStorage.setItem("role", data.role);
+              // ✅ Store course info (if your backend sends it)
+              localStorage.setItem("course", data.course); // <-- place here
+              localStorage.setItem("paymentStatus", data.paymentStatus); // <-- and here
+                  // Redirect based on role
+                if (data.role === "admin") {
+                  window.location.href = "\admin.html";
+                } else if (data.role === "faculty") {
+                  window.location.href = "\faculty.html";
+                } else if (data.role === "student") {
+                  window.location.href = "\student.html";
+                } else if (data.role === "parent") {
+                  window.location.href = "\parent.html";
+                } else {
+                  alert("Unknown role. Contact support.");
+                }
+            }
+
+            } catch (err) {
+              console.error("Login error:", err);
+              errorMessage.textContent = "Something went wrong. Please try again later.";
+            }
+          });
+    </script>
+</body>
+</html>

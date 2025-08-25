@@ -1,0 +1,33 @@
+<div class="container">
+  <h2>All Courses</h2>
+  <div id="courses-grid" class="courses-grid"></div>
+</div>
+
+<script>document.addEventListener('DOMContentLoaded', async () => {
+  const grid = document.getElementById('courses-grid');
+
+  const res = await fetch('http://localhost:5000/public/courses');
+  const courses = await res.json();
+
+  grid.innerHTML = '';
+
+  courses.forEach(course => {
+    const card = document.createElement('div');
+    card.className = 'course-card';
+
+    card.innerHTML = `
+      <div class="course-content">
+        <h3>${course.title}</h3>
+        <p><strong>Subject:</strong> ${course.subject}</p>
+        <p><strong>Grade:</strong> ${course.grade_level}</p>
+        <p><strong>Duration:</strong> ${course.duration}</p>
+        <p><strong>Fee:</strong> ₹${course.fee}</p>
+        <p>${course.description}</p>
+        <hr>
+      </div>
+    `;
+
+    grid.appendChild(card);
+  });
+});
+</script>

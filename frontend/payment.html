@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Payment - Aim Academy</title>
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+<body>
+
+  <h2>Complete Your Payment</h2>
+  <p>You’ve selected: <strong><span id="courseName"></span></strong></p>
+  <p>Amount to Pay: ₹<strong><span id="amountValue"></span></strong></p>
+  <button onclick="makePayment()">Pay Now</button>
+
+  <script>
+    const course = localStorage.getItem("course");
+    const price = localStorage.getItem("price");
+    const email = localStorage.getItem("email");
+
+    document.getElementById("courseName").innerText = course || "Unknown";
+    document.getElementById("amountValue").innerText = price || "500";
+
+    async function makePayment() {
+      try {
+        // Create Razorpay order
+        const res = await fetch("http://localhost:5000/create-order", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ amount: price * 100 }) // ₹ to paise
+        });
+
+        const data = await res.json();
+
+        const options = {
+          key: "YOUR_PUBLIC_RAZORPAY_KEY", // 🔁 Replace with your Razorpay Key ID
+          amount: data.amount,
+          currency: "INR",
+          name: "Aim Academy",
+          description: `Payment for ${course}`,
+          order_id: data.id,
+          handler: async function (response) {
+            alert("Payment successful!");
+
+            // Update backend with payment success
+            const confirm = await fetch("http://localhost:5000/payment-success", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ email })
+            });
+
+            if (confirm.ok) {
+              localStorage.setItem("paymentStatus", "paid");
+              window.location.href = "/student.html";
+            } else {
+              alert("Payment done, but failed to update status.");
+            }
+          },
+          prefill: {
+            email: email,
+            name: "Student"
+          },
+          theme: {
+            color: "#007bff"
+          }
+        };
+
+        const rzp = new Razorpay(options);
+        rzp.open();
+      } catch (err) {
+        console.error("Payment error:", err);
+        alert("Payment failed. Try again.");
+      }
+    }
+  </script>
+
+</body>
+</html>

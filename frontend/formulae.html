@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulae - Aim Academy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        :root {
+            --primary: #4e54c8;
+            --secondary: #8f94fb;
+            --accent: #f6c90e;
+            --dark: #2c3e50;
+            --light: #f8f9fa;
+            --success: #28a745;
+            --danger: #dc3545;
+            --text: #333333;
+            --text-light: #6c757d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text);
+            background-color: #f5f7ff;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 50px;
+            margin-right: 15px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a.active {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .btn-login {
+            padding: 8px 20px;
+            background: var(--accent);
+            color: var(--dark);
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-login:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(246, 201, 14, 0.6);
+        }
+
+        .mobile-menu {
+            display: none;
+            font-size: 1.5rem;
+            color: white;
+            cursor: pointer;
+        }
+
+        /* Formulae Hero Section */
+        .formulae-hero {
+            padding: 120px 0 80px;
+            background: linear-gradient(rgba(78, 84, 200, 0.9), rgba(143, 148, 251, 0.9)), 
+                        url('images/math-pattern.png') center/cover;
+            color: white;
+            text-align: center;
+        }
+
+        .formulae-hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            animation: fadeInDown 1s ease;
+        }
+
+        .formulae-hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            animation: fadeInUp 1s ease 0.2s forwards;
+            opacity: 0;
+        }
+
+        /* Formulae Section */
+        .formulae-section {
+            padding: 80px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            color: var(--dark);
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .formulae-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .formulae-tab {
+            padding: 10px 25px;
+            background: none;
+            border: none;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-light);
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+            border-radius: 50px;
+        }
+
+        .formulae-tab:not(:last-child) {
+            margin-right: 10px;
+        }
+
+        .formulae-tab::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .formulae-tab:hover {
+            color: var(--dark);
+        }
+
+        .formulae-tab.active {
+            color: var(--primary);
+            font-weight: 600;
+            background: rgba(78, 84, 200, 0.1);
+        }
+
+        .formulae-tab.active::after {
+            width: 100%;
+        }
+
+        .formulae-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .formulae-content.active {
+            display: block;
+        }
+
+        .formula-category {
+            margin-bottom: 50px;
+        }
+
+        .formula-category h3 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(78, 84, 200, 0.2);
+        }
+
+        .formula-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .formula-card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--primary);
+        }
+
+        .formula-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .formula-title {
+            font-size: 1.3rem;
+            color: var(--dark);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .formula-title i {
+            margin-right: 10px;
+            color: var(--primary);
+        }
+
+        .formula-equation {
+            background: rgba(78, 84, 200, 0.05);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-family: 'Times New Roman', serif;
+            font-size: 1.2rem;
+            text-align: center;
+            overflow-x: auto;
+        }
+
+        .formula-equation.latex {
+            font-family: 'Latin Modern Math', 'Cambria Math', serif;
+        }
+
+        .formula-description {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        .formula-example {
+            margin-top: 15px;
+            padding: 15px;
+            background: rgba(246, 201, 14, 0.1);
+            border-radius: 8px;
+            border-left: 3px solid var(--accent);
+        }
+
+        .formula-example h4 {
+            font-size: 0.9rem;
+            color: var(--dark);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .formula-example h4 i {
+            margin-right: 8px;
+            color: var(--accent);
+        }
+
+        .formula-example p {
+            font-size: 0.9rem;
+            color: var(--text);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 60px 0 20px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-about h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-about h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--accent);
+        }
+
+        .footer-about p {
+            margin-bottom: 20px;
+            color: #b3b3b3;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: var(--accent);
+            color: var(--dark);
+            transform: translateY(-5px);
+        }
+
+        .footer-links h3, .footer-contact h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-links h3::after, .footer-contact h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--accent);
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #b3b3b3;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+
+        .footer-contact p {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            color: #b3b3b3;
+        }
+
+        .footer-contact i {
+            margin-right: 10px;
+            color: var(--accent);
+            width: 20px;
+            text-align: center;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #b3b3b3;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .formulae-hero h1 {
+                font-size: 3rem;
+            }
+            
+            .section-header h2 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: fixed;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background: var(--primary);
+                padding: 20px;
+                flex-direction: column;
+                gap: 15px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+                animation: fadeInDown 0.5s ease;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .formulae-hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .formula-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .formulae-hero h1 {
+                font-size: 2rem;
+            }
+
+            .formulae-tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .formulae-tab {
+                width: 100%;
+                text-align: center;
+                margin: 5px 0;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                    <img src="images/logo.png" alt="Aim Academy Logo">
+                    <h1>Aim Academy</h1>
+                </a>
+                <div class="nav-links">
+                    <a href="index.html">Home</a>
+                    <a href="about.html">About Us</a>
+                    <a href="courses.html">Courses</a>
+                    <a href="formulae.html" class="active">Formulae</a>
+                    <a href="contact.html">Contact</a>
+                    <a href="login.html" class="btn-login">Login</a>
+                </div>
+                <div class="mobile-menu">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Formulae Hero Section -->
+    <section class="formulae-hero">
+        <div class="container">
+            <h1>Mathematics & Accountancy Formulae</h1>
+            <p>Comprehensive collection of essential formulae for students from 6th grade to professional accountancy</p>
+        </div>
+    </section>
+
+    <!-- Formulae Section -->
+    <section class="formulae-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Essential Formulae Reference</h2>
+            </div>
+
+            <div class="formulae-tabs">
+                <button class="formulae-tab active" data-tab="algebra">Algebra</button>
+                <button class="formulae-tab" data-tab="geometry">Geometry</button>
+                <button class="formulae-tab" data-tab="trigonometry">Trigonometry</button>
+                <button class="formulae-tab" data-tab="calculus">Calculus</button>
+                <button class="formulae-tab" data-tab="accountancy">Accountancy</button>
+            </div>
+
+            <!-- Algebra Formulae -->
+            <div class="formulae-content active" id="algebra">
+                <div class="formula-category">
+                    <h3><i class="fas fa-square-root-alt"></i> Algebraic Identities</h3>
+                    <div class="formula-grid">
+                        <div class="formula-card">
+                            <div class="formula-title">
+                                <i class="fas fa-equals"></i> Square of a Sum
+                            </div>
+                            <div class="formula-equation">
+                                (a + b)² = a² + 2ab + b²
+                            </div>
+                            <div class="formula-description">
+                                This identity shows how to expand the square of a binomial. It's fundamental for simplifying algebraic expressions and solving equations.
+                            </div>
+                            <div class="formula-example">
+                                <h4><i class="fas fa-lightbulb"></i> Example</h4>
+                                <p>(x + 3)² = x² + 2(x)(3) + 3² = x² + 6x + 9</p>
+                            </div>
+                        </div>
+
+                        <div class="formula-card">
+                            <div class="formula-title">
+                                <i class="fas fa-equals"></i> Difference of Squares
+                            </div>
+                            <div class="formula-equation">
+                                a² - b² = (a + b)(a - b)
+                            </div>
+                            <div class="formula-description">
+                                This identity is used for factoring expressions and simplifying complex fractions. It's particularly useful in solving quadratic equations.
+                            </div>
+                            <div class="formula-example">
+                                <h4><i class="fas fa-lightbulb"></i> Example</h4>
+                                <p>x² - 16 = (x + 4)(x - 4)</p>
+                            </div>
+                        </div>
+
+                        <div class="formula-card">
+                            <div class="formula-title">
+                                <i class="fas fa-equals"></i> Quadratic Formula
+                            </div>
+                            <div class="formula-equation">
+                                x = [-b ± √(b² - 4ac)] / 2a
+                            </div>
+                            <div class="formula-description">
+                                The solution to the quadratic equation ax² + bx + c = 0. The discriminant (b² - 4ac) determines the nature of the roots.
+                            </div>
+                            <div class="formula-example">
+                                <h4><i class="fas fa-lightbulb"></i> Example</h4>
+                                <p>For 2x² + 5x - 3 = 0, x = [-5 ± √(25 + 24)]/4 = [-5 ± 7]/4 ⇒ x = 0.5 or -3</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="formula-category">
+                    <h3><i class="fas fa-chart-line"></i> Arithmetic and Geometric Progressions</h3>
+                    <div class="formula-grid">
+                        <div class="formula-card">
+                            <div class="formula-title">
+                                <i class="fas fa-list-ol"></i> AP nth Term
+                            </div>
+                            <div class="formula-equation">
+                                aₙ = a₁ + (n - 1)d
+                            </div>
+                            <div class="formula-description">
+                                Arithmetic progression nth term formula, where a₁ is the first term and d is the common difference between terms.
+                            </div>
+                            <div class="formula-example">
+                                <h4><i class="fas fa-lightbulb"></i> Example</h4>
+                                <p>For AP: 3, 7, 11,... 10th term = 3 + (10-1)×4 = 39</p>
+                            </div>
+                        </div>
+
+                        <div class="formula-card">
+                            <div class="formula-title">
+                                <i class="fas fa-sigma"></i> AP Sum
+                            </div>
+                            <div class="formula-equation">
+                                Sₙ = n/2 [2a₁ + (n - 1)d] = n/2 (a₁ + aₙ)
+                            </div>
+                            <div class="formula-description">
+                                Two equivalent forms for the sum of first n terms of an arithmetic progression.
+                            </div>
+                            <div class="formula-example">
+                                <h4><i class="fas fa-lightbulb"></i> Example</h4>
+                                <p>Sum of first 10 terms of 3,7,11,... = 10/2 (3 + 39) = 210</p>
+                            </div>
+                        </div>
+
+                        <div class="formula-card">
+                            <div class="formula-title">
+                                <i class="fas fa-project-diagram"></i> GP nth Term
+                            </div>
+                            <div class="formula-equation">
+                                aₙ = a₁ × rⁿ⁻¹
+                            </div>
+                            <div class="formula-description">
+                                Geometric progression nth term formula, where a₁ is the first term and r is the common ratio between terms.
+                            </div>
+                            <div class="formula-example">
+                                <h4><i class="fas fa-lightbulb"></i> Example</h4>
+                                <p>For GP: 2, 6, 18,... 5th term = 2 × 3⁴ = 162</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Geometry Formulae -->
+            <div class="formulae-content" id="geometry">
+                <div class="formula-category">
+                    <h3><i class="fas fa-shapes"></i> 2D Shapes</h3>
+                    <div class="formula-grid">
+                        <div class="formula-card">
+                            <div class="formula-title">
+                                <i class="fas fa-square"></i> Area of Rectangle
+                            </div>
+                            <div class="formula-equation">
+                                A = l × w
+                            </div>
+                            <div class="formula-description">
+                                Area of a rectangle equals length multiplied by width. Fundamental for all area calculations.
+                            </div>
+                            <div class="formula-example">
+                                <h4><i class="fas fa-lightbulb"></i> Example</h4>
+                                <p>Rectangle with l=5cm, w=3cm has A=15cm²</p>
+                            </div>
+                        </div>
+
+                        <div class="formula-card">
+                            <div class="formula-title">
+                                <i class="fas fa-circle"></i> Area of Circle
+                            </div>
+                            <div class="formula-equation">
+                                A = πr²
+                            </div>
+                            <div class="formula-description">
+                                Area of a circle with radius r. π (pi) is approximately 3.14159.
+                            </div>
+                            <div class="formula-example">
+                                <h4><i class="fas fa-lightbulb"></i> Example</h4>
+                                <p>Circle with r=7cm has A≈153.94cm²</p>
+                            </div>
+                        </div>
+
+                        <div class="formula-card">
+                            <div class="formula-title">
+                                <i class="fas fa-triangle"></i> Area of Triangle
+                            </div>
+                            <div class="formula-equation">
+                                A = ½ × b × h
+                            </div>
+                            <div class="formula-description">
+                                Area of a triangle equals half the product of base and height. Applies to all triangle types.
+                            </div>
+                            <div class="formula-example">
+                                <h4><i class="fas fa-lightbulb"></i> Example</h4>
+                                <p>Triangle with b=8cm, h=5cm has A=20cm²</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="formula-category">
+                    <h3><i class="fas fa-cube"></i> 3D Shapes</h3>
+                    <div class="formula-grid">
+                        <div class="formula-card">
+                            <div class="formula-title">
+                                <i class="fas fa-box"></i> Volume of Cuboid
+                            </div>
+                            <div class="formula-equation">
+                                V = l × w × h
+                            </div>
+                            <div class="formula-description">
+                                Volume of a rectangular prism (cuboid) equals length × width × height.
+                            </div>
+                            <div class="formula-example">
+                                <h4><i class="fas fa-lightbulb"></i> Example</h4>
+                                <p>Cuboid 4cm×5cm×6cm has V=120cm³</p>
+                            </div>
+                        </div>
+
+                        <div class="formula-card">
+                            <div class="formula-title">
+                                <i class="fas fa-globe"></i> Volume of Sphere
+                            </div>
+                            <div class="formula-equation">
+                                V = (4/3)πr³
+                            </div>
+                            <div class="formula-description">
+                                Volume of a sphere with radius r. Surface area is 4πr².
+                            </div>
+                            <div class="formula-example">
+                                <h4><i class="fas fa-lightbulb"></i> Example</h4>
+                                <p>Sphere with r=3cm has V≈113.1cm³</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trigonometry Formulae -->
+            <div class="formulae-content" id="trigonometry">
+                <div class="formula-category">
+                    <h3><i class="fas fa-project-diagram"></i> Basic Trigonometric Identities</h3>
+                    <div class="formula-grid">
+                        <div class="formula-card">
+                            <div class="formula-title">
+                                <i class="fas fa-theta"></i> Pythagorean Identity
+                            </div>
+                            <div class="formula-equation">
+                                sin²θ + cos²θ = 1
+                            </div>
+                            <div class="formula-description">
+                                Fundamental identity relating sine and cosine functions of the same angle.
+                            </div>
+                            <div class="formula-example">
+                                <h4><i class="fas fa-lightbulb"></i> Example</h4>
+                                <p>If sinθ = 0.6, then cosθ = √(1 - 0.36) = 0.8</p>
+                            </div>
+                        </div>
+
+                        <div class="formula-card">
+                            <div class="formula-title">
+                                <i class="fas fa-divide"></i> Tangent Identity
+                            </div>
+                            <div class="formula-equation">
+                                tanθ = sinθ / cosθ
+                            </div>
+                            <div class="formula-description">
+                                Definition of tangent function in terms of sine and cosine.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Calculus Formulae -->
+            <div class="formulae-content" id="calculus">
+                <div class="formula-category">
+                    <h3><i class="fas fa-infinity"></i> Differentiation</h3>
+                    <div class="formula-grid">
+                        <div class="formula-card">
+                            <div class="formula-title">
+                                <i class="fas fa-slope"></i> Power Rule
+                            </div>
+                            <div class="formula-equation">
+                                d/dx(xⁿ) = nxⁿ⁻¹
+                            </div>
+                            <div class="formula-description">
+                                Fundamental rule for differentiating polynomial terms.
+                            </div>
+                            <div class="formula-example">
+                                <h4><i class="fas fa-lightbulb"></i> Example</h4>
+                                <p>d/dx(x³) = 3x²</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Accountancy Formulae -->
+            <div class="formulae-content" id="accountancy">
+                <div class="formula-category">
+                    <h3><i class="fas fa-calculator"></i> Financial Accounting</h3>
+                    <div class="formula-grid">
+                        <div class="formula-card">
+                            <div class="formula-title">
+                                <i class="fas fa-balance-scale"></i> Accounting Equation
+                            </div>
+                            <div class="formula-equation">
+                                Assets = Liabilities + Owner's Equity
+                            </div>
+                            <div class="formula-description">
+                                Fundamental equation that forms the basis of double-entry bookkeeping.
+                            </div>
+                        </div>
+
+                        <div class="formula-card">
+                            <div class="formula-title">
+                                <i class="fas fa-percentage"></i> Gross Profit Margin
+                            </div>
+                            <div class="formula-equation">
+                                (Revenue - COGS) / Revenue × 100%
+                            </div>
+                            <div class="formula-description">
+                                Measures how much out of every dollar of sales a company retains as gross profit.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <h3>Aim Academy</h3>
+                    <p>Excellence in education since 2010. Specializing in Mathematics coaching for school and competitive exams.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="courses.html">Courses</a></li>
+                        <li><a href="formulae.html">Formulae</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Sholinganallur, Chennai</p>
+                    <p><i class="fas fa-phone"></i> +91 9011549702</p>
+                    <p><i class="fas fa-envelope"></i> info@aimacademy.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Aim Academy. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        document.querySelector('.mobile-menu').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+
+        // Formulae Tab Functionality
+        const formulaTabs = document.querySelectorAll('.formulae-tab');
+        const formulaContents = document.querySelectorAll('.formulae-content');
+
+        formulaTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and contents
+                formulaTabs.forEach(t => t.classList.remove('active'));
+                formulaContents.forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                tab.classList.add('active');
+                document.getElementById(tab.dataset.tab).classList.add('active');
+            });
+        });
+
+        // Animate formula cards when they come into view
+        const formulaCards = document.querySelectorAll('.formula-card');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate__animated', 'animate__fadeInUp');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        formulaCards.forEach(card => {
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>

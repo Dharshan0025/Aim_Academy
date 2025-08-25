@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Student Dashboard - Aim Academy</title>
+  <link rel="stylesheet" href="css/student.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #007bff;
+      color: white;
+      padding: 10px 20px;
+    }
+
+    header h2 {
+      margin: 0;
+    }
+
+    header button {
+      background-color: #fff;
+      color: #007bff;
+      border: none;
+      padding: 8px 16px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .course-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .course-card {
+      border: 1px solid #ccc;
+      padding: 15px;
+      width: 250px;
+      border-radius: 10px;
+      box-shadow: 2px 2px 5px #aaa;
+    }
+
+    .course-card h4 {
+      margin: 5px 0;
+    }
+
+    .course-card button {
+      margin-top: 10px;
+      background: #007bff;
+      color: white;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    section {
+      margin-top: 30px;
+    }
+
+    ul li {
+      margin: 10px 0;
+    }
+
+    a {
+      color: #007bff;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h2>Aim Academy - Student Dashboard</h2>
+    <button onclick="logout()">Logout</button>
+  </header>
+
+  <!-- Course Selection UI -->
+  <section id="course-selection" style="display: none;">
+    <h3>Select a Course</h3>
+    <div id="courseGrid" class="course-grid"></div>
+  </section>
+
+  <!-- Payment Pending UI -->
+  <section id="payment-pending" style="display: none;">
+    <h3>Your selected course: <span id="selectedCourse"></span></h3>
+    <p>Your payment is pending.</p>
+    <a href="payment.html"><button>Proceed to Payment</button></a>
+  </section>
+
+  <!-- Full Dashboard UI -->
+  <section id="dashboard" style="display: none;">
+    <h3>Welcome to Your Dashboard</h3>
+    <ul>
+      <li><a href="notes.html">📘 View Notes</a></li>
+      <li><a href="timetable.html">📅 Class Timetable</a></li>
+      <li><a href="progress.html">📊 Progress Report</a></li>
+    </ul>
+  </section>
+
+  <script src="js/student.js"></script>
+</body>
+</html>

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Aim Academy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+     <link rel="stylesheet" href="css/register.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <img src="images/logo.png" alt="Aim Academy Logo">
+                <h1>Aim<span>Academy</span></h1>
+            </a>
+            <nav class="navbar">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="courses.html">Courses</a></li>
+                    <li><a href="timetable.html">Timetable</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="login.html" class="btn-login">Login</a></li>
+                </ul>
+            </nav>
+            <div class="mobile-menu">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Auth Section -->
+    <section class="auth-section">
+        <div class="container">
+            <div class="auth-card">
+                <h2>Create Your Account</h2>
+               <form method="POST" action="http://localhost:5000/register" id="registerForm">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <div class="password-input">
+                            <input type="password" id="password" name="password" required>
+                            <i class="fas fa-eye toggle-password"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="full_name">Full Name</label>
+                        <input type="text" id="full_name" name="full_name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="role">Account Type</label>
+                        <select id="role" name="role" required>
+                            <option value="">Select Role</option>
+                            <option value="student">Student</option>
+                            <option value="parent">Parent</option>
+                            <option value="faculty">Faculty</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Student Fields -->
+                    <div id="student-fields" class="role-fields">
+                        <div class="form-group">
+                            <label for="grade">Grade/Class</label>
+                            <select id="grade" name="grade">
+                                <option value="">Select Grade</option>
+                                <option value="6">Class 6</option>
+                                <option value="7">Class 7</option>
+                                <option value="8">Class 8</option>
+                                <option value="9">Class 9</option>
+                                <option value="10">Class 10</option>
+                                <option value="11">Class 11</option>
+                                <option value="12">Class 12</option>
+                                <option value="college">College/Engineering</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="school">School/College Name</label>
+                            <input type="text" id="school" name="school">
+                        </div>
+                    </div>
+                    
+                    <!-- Parent Fields -->
+                    <div id="parent-fields" class="role-fields">
+                        <div class="form-group">
+                            <label for="student_id">Student ID (if already registered)</label>
+                            <input type="text" id="student_id" name="student_id">
+                        </div>
+                    </div>
+                    
+                    <!-- Faculty Fields -->
+                    <div id="faculty-fields" class="role-fields">
+                        <div class="form-group">
+                            <label for="qualification">Qualification</label>
+                            <input type="text" id="qualification" name="qualification">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="subjects">Subjects (comma separated)</label>
+                            <input type="text" id="subjects" name="subjects">
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn-primary">Register</button>
+                </form>
+                
+                <div class="auth-links">
+                    <p>Already have an account? <a href="{{ url_for('frontend\login.html') }}">Login here</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <h3>Aim Academy</h3>
+                    <p>Excellence in education since 2010. Specializing in Mathematics coaching for school and competitive exams.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="courses.html">Courses</a></li>
+                        <li><a href="timetable.html">Timetable</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Sholinganallur, Chennai</p>
+                    <p><i class="fas fa-phone"></i> +91 9011549702</p>
+                    <p><i class="fas fa-envelope"></i> info@aimacademy.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Aim Academy. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+<script>
+    // Mobile Menu Toggle
+    document.querySelector('.mobile-menu').addEventListener('click', function() {
+        document.querySelector('.navbar').classList.toggle('active');
+    });
+
+    // Header Scroll Effect
+    window.addEventListener('scroll', function() {
+        const header = document.querySelector('.header');
+        if (window.scrollY > 50) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+    });
+
+    // Toggle Password Visibility
+    document.querySelector('.toggle-password').addEventListener('click', function() {
+        const passwordInput = document.getElementById('password');
+        const icon = this;
+        
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+        } else {
+            passwordInput.type = 'password';
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+        }
+    });
+
+    // Show/Hide Role-Specific Fields
+    function showRoleFields() {
+        const role = document.getElementById('role').value;
+        
+        // Hide all role fields first
+        document.querySelectorAll('.role-fields').forEach(field => {
+            field.style.display = 'none';
+        });
+        
+        // Show the selected role's fields
+        if (role === 'student') {
+            document.getElementById('student-fields').style.display = 'block';
+        } else if (role === 'parent') {
+            document.getElementById('parent-fields').style.display = 'block';
+        } else if (role === 'faculty') {
+            document.getElementById('faculty-fields').style.display = 'block';
+        }
+    }
+
+    // Initialize role fields visibility and input focus effects
+    document.addEventListener('DOMContentLoaded', function() {
+        // Hide all role fields initially
+        document.querySelectorAll('.role-fields').forEach(field => {
+            field.style.display = 'none';
+        });
+        
+        // Set up event listener for role selection
+        document.getElementById('role').addEventListener('change', showRoleFields);
+        
+        // Form Input Focus Effects
+        const inputs = document.querySelectorAll('input, select');
+        inputs.forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.querySelector('label').style.color = 'var(--primary)';
+            });
+            
+            input.addEventListener('blur', function() {
+                this.parentElement.querySelector('label').style.color = 'var(--dark)';
+            });
+        });
+    });
+
+    // Form submission with fetch
+    document.getElementById("registerForm").addEventListener("submit", async function(e) {
+        e.preventDefault();
+
+        const username = document.getElementById("username").value;
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+        const role = document.getElementById("role").value;
+        const full_name = document.getElementById("full_name").value;
+        const phone = document.getElementById("phone").value;
+
+        // Role-specific extra fields
+        let extraData = {};
+
+        if (role === 'student') {
+            extraData.grade = document.getElementById("grade").value;
+            extraData.school = document.getElementById("school").value;
+        } else if (role === 'parent') {
+            extraData.student_id = document.getElementById("student_id").value;
+        } else if (role === 'faculty') {
+            extraData.qualification = document.getElementById("qualification").value;
+            extraData.subjects = document.getElementById("subjects").value;
+        }
+
+        const bodyData = {
+            username,
+            email,
+            password,
+            role,
+            full_name,
+            phone,
+            ...extraData
+        };
+
+        try {
+            const res = await fetch("http://localhost:5000/register", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(bodyData)
+            });
+
+            const data = await res.json();
+
+            if (res.ok) {
+                alert("Registration successful!");
+                if (data.redirectTo) {
+                    window.location.href = "\login.html";
+                }
+            } else {
+                alert(data.message || "Registration failed.");
+            }
+        } catch (err) {
+            console.error("Registration error", err);
+            alert("Something went wrong.");
+        }
+    });
+</script>
+
+</body>
+</html>

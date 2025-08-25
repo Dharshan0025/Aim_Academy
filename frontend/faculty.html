@@ -1,0 +1,142 @@
+<!-- Faculty Page UI -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<link rel="stylesheet" href="css/faculty.css">
+<div class="faculty-section">
+    <h2>Add Class Schedule</h2>
+    <form id="scheduleForm">
+        <input type="text" id="subject" placeholder="Subject" required />
+        <select id="day">
+            <option value="">Select Day</option>
+            <option>Monday</option><option>Tuesday</option><option>Wednesday</option>
+            <option>Thursday</option><option>Friday</option><option>Saturday</option>
+        </select>
+        <input type="text" id="time" placeholder="Time (e.g. 10:00 AM)" required />
+        <input type="url" id="zoomLink" placeholder="Zoom Link" required />
+        <button type="submit" class="btn"><i class="fas fa-plus"></i> Add Schedule</button>
+    </form>
+    <div id="scheduleStatus"></div>
+
+    <h2>Post Homework</h2>
+    <form id="homeworkForm">
+        <input type="text" id="hwTitle" placeholder="Homework Title" required />
+        <textarea id="hwDescription" placeholder="Homework Description" required></textarea>
+        <input type="text" id="hwSubject" placeholder="Subject" required />
+        <input type="date" id="hwDueDate" required />
+        <input type="text" id="createdBy" placeholder="Created By (e.g. Mr. Smith)" required />
+        <button type="submit" class="btn"><i class="fas fa-upload"></i> Post Homework</button>
+    </form>
+    <div id="homeworkStatus"></div>
+</div>
+<script>
+  // Utility function for sending data
+async function postData(url, data) {
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token') || ''}`
+            },
+            body: JSON.stringify(data)
+        });
+
+        if (!response.ok) {
+            const err = await response.json();
+            throw new Error(err.message || `HTTP Error: ${response.status}`);
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Error posting data:', error);
+        throw error;
+    }
+}
+
+// Handle Add Schedule
+document.getElementById('scheduleForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const scheduleData = {
+        subject: document.getElementById('subject').value,
+        day: document.getElementById('day').value,
+        time: document.getElementById('time').value,
+        zoomLink: document.getElementById('zoomLink').value
+    };
+
+    try {
+        await postData('http://localhost:5000/class-schedule/add', scheduleData);
+        document.getElementById('scheduleStatus').innerHTML = 
+            '<div class="status-message status-success"><i class="fas fa-check-circle"></i> Schedule added successfully!</div>';
+        document.getElementById('scheduleForm').reset();
+    } catch (error) {
+        document.getElementById('scheduleStatus').innerHTML = 
+            `<div class="status-message status-error"><i class="fas fa-exclamation-circle"></i> ${error.message}</div>`;
+    }
+});
+
+// Handle Post Homework
+document.getElementById('homeworkForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const homeworkData = {
+        title: document.getElementById('hwTitle').value,
+        description: document.getElementById('hwDescription').value,
+        subject: document.getElementById('hwSubject').value,
+        dueDate: document.getElementById('hwDueDate').value,
+        createdBy: document.getElementById('createdBy').value
+    };
+
+    try {
+        await postData('http://localhost:5000/homework/add', homeworkData);
+        document.getElementById('homeworkStatus').innerHTML = 
+            '<div class="status-message status-success"><i class="fas fa-check-circle"></i> Homework posted successfully!</div>';
+        document.getElementById('homeworkForm').reset();
+    } catch (error) {
+        document.getElementById('homeworkStatus').innerHTML = 
+            `<div class="status-message status-error"><i class="fas fa-exclamation-circle"></i> ${error.message}</div>`;
+    }
+});
+</script>
+
+
+<h2>Upload Note</h2>
+<form id="uploadNoteForm" enctype="multipart/form-data">
+  <input type="text" name="title" placeholder="Title" required><br><br>
+  <input type="text" name="subject" placeholder="Subject" required><br><br>
+  <input type="file" name="file" required><br><br>
+  <button type="submit">Upload</button>
+</form>
+
+<p id="status"></p>
+
+<script>
+document.getElementById('uploadNoteForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const form = e.target;
+  const formData = new FormData(form);
+  const status = document.getElementById('status');
+
+  try {
+    const response = await fetch('http://localhost:5000/notes/add', {
+      method: 'POST',
+      body: formData
+    });
+
+    const text = await response.text(); // 🔄 Parse raw text
+    let result;
+    try {
+      result = JSON.parse(text); // 🔄 Try to parse JSON
+    } catch {
+      throw new Error('Server returned invalid JSON: ' + text);
+    }
+
+    if (response.ok) {
+      status.innerText = "✅ Uploaded successfully!";
+      form.reset();
+    } else {
+      status.innerText = "❌ Upload failed: " + (result.message || 'Unknown error');
+    }
+
+  } catch (err) {
+    status.innerText = "⚠️ Error: " + err.message;
+  }
+});
+</script>
